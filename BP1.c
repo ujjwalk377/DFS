@@ -9,22 +9,65 @@ struct node
 };
 
 struct node* Head=NULL;
-/*void search(int item){
-    int i;
-    for(i=0;i<)
-}*/
 
-void InsertAtBeg(int item){
-        struct node* ptr=(struct node*)malloc(sizeof(struct node));
-        ptr->data=item;
-        ptr->next=NULL;
-        Head=ptr;
+void search(){
+    int item;
+    printf("\nEnter the item to search\n");
+    scanf("%d",&item);
+    struct node* temp;
+    temp=Head;
+    while (temp!=NULL)
+    {
+        if(temp->data==item){
+            printf("\nFound the element\n");
+        }
+        else{
+            printf("\nElement Not Found!!!\n");
+        }
+        temp=temp->next;
+    } 
 }
 
-void InsertAfterElem(int item,int after){
+void InsertAtBeg(){
+    int n,i,elem;
+        if(Head==NULL){
+            printf("\nHow many nodes you want to insert:\n ");
+                scanf("%d",&n);
+                if(n!=0){
+                    struct node* temp=(struct node*)malloc(sizeof(struct node));
+                temp->next=NULL;
+                temp=Head;
+                int i;
+                printf("\nEnter the element: \n");
+                scanf("%d",&temp->data);
+
+                for(i=2;i<=n;i++){
+                    struct node* ptr=(struct node*)malloc(sizeof(struct node));
+                    printf("\nEnter the element\n");
+                    scanf("%d",&ptr->data);
+                    Head=ptr;
+                    ptr->next=temp;
+                }
+            }
+            printf("\nList created\n");  
+        }
+        else{
+            struct node* ptr=(struct node*)malloc(sizeof(struct node));
+            ptr->data=elem;
+            ptr->next=Head;
+            Head=ptr;
+        }
+}
+
+void InsertAfterElem(){
+    int elem,after;
+    printf("Enter the element: ");
+    scanf("%d",&elem);
+	printf("Enter the element after: ");
+	scanf("%d",&after);
     struct node* ptr=(struct node*)malloc(sizeof(struct node));
     struct node *temp;
-    ptr->data=item;
+    ptr->data=elem;
     temp=Head;
     int i;
     for(i=0;i<after-2;i++){
@@ -41,10 +84,13 @@ void InsertAfterElem(int item,int after){
     }   
 }
 
-void InsertAtEnd(int item){
+void InsertAtEnd(){
+    int elem;
+    printf("\nEnter the element\n");
+    scanf("%d",&elem);
     struct node* ptr=(struct node*)malloc(sizeof(struct node));
     struct node* temp;
-    ptr->data=item;
+    ptr->data=elem;
     ptr->next=NULL;
     if(Head==NULL){
         Head=ptr;
@@ -82,7 +128,10 @@ void DeleteFromEnd(){
         printf("\nNode Deleted\n");
     }
 }
-void DeleteAfterElem(int after){
+void DeleteAfterElem(){
+    int after;
+    printf("Enter the element: ");
+	scanf("%d",&after);
     struct node *ptr;
     ptr=Head;
     int i;
@@ -100,23 +149,35 @@ void DeleteAfterElem(int after){
     printf("\nNode deleted\n");
 
 }
-/*void DeleteList(){
-
-}*/
+void DeleteList(){
+    struct node* temp;
+    temp=Head;
+    while (temp->next!=NULL)
+    {
+        temp=temp->next;
+        free(temp);
+    }
+    printf("\nExit Successfully!!!\n");
+    
+}
 
 void traverse(){
     struct node* temp;
-    temp=Head;
-	while(temp!=NULL){
+    if(Head=NULL){
+        printf("\nEmpty List\n");
+    }else{
+        temp=Head;
+	    while(temp!=NULL){
 		printf("%d",temp->data);
 		temp=temp->next;
 	}
+    }
+   
 }
 
 int main()
 {
-	int element, after;
-	int choice;
+	int choice,option,n;
 	while (1)
 	{
 		printf("\n---CHOOSE FROM BELOW---\n");
@@ -126,25 +187,18 @@ int main()
 		printf("4. Traverse in order\n");
 		printf("5. Delete from Beg\n");
 		printf("6. Delete from End\n");
-		printf("7. Insert after Element\n");
-		printf("8. Exit\n");
+		printf("7. Delete after Element\n");
+        printf("8. Search and Element\n");
+        printf("9. Exit\n");
 		printf("\nEnter Your Choice: \n");
 		scanf("%d", &choice);
 
 		switch(choice){
-		case 1: printf("Enter the element: ");
-		  		scanf("%d",&element);
-		  		InsertAtBeg(element);
+		case 1: InsertAtBeg();
 		  		break;
-		case 2: printf("Enter the element: ");
-				scanf("%d",&element);
-				InsertAtEnd(element);
+		case 2: InsertAtEnd();
 				break;
-		case 3: printf("Enter the element: ");
-				printf("Enter the element after: ");
-				scanf("%d",&element);
-				scanf("%d",&after);
-				InsertAfterElem(element,after);
+		case 3: InsertAfterElem();
 				break;
 		case 4: traverse();
 				break;
@@ -152,12 +206,12 @@ int main()
 				break;
 		case 6: DeleteFromEnd();
 				break;
-		case 7: printf("Enter the element: ");
-				scanf("%d",&after);
-				DeleteAfterElem(after);
+		case 7: DeleteAfterElem();
 				break;
-		//case 8: DeleteList();
-				//break;
+		case 8: search();
+				break;
+        case 9: DeleteList();
+                break;
 	    }
     }
     return 0;
